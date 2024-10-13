@@ -2,4 +2,14 @@
     <string name="app_name">Rides</string>
     <string name="search_hint">Vehicle Count</string>
     <string name="empty_result">No result</string>
+
+    <string name="label_vin">Vin : %s</string>
+    <string name="label_make_model">Make and Model : %s</string>
+    <string name="label_color">Color : %s</string>
+    <string name="label_car_type">Car Type : %s</string>
+
+    <string name="error_empty_input">Empty input</string>
+    <string name="error_invalid_input">Invalid input</string>
+    <string name="error_network">Network error</string>
+
 </resources>

@@ -1,6 +1,5 @@
 package com.edwardwongtl.rides.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.edwardwongtl.rides.model.Vehicle
@@ -12,12 +11,6 @@ import kotlinx.coroutines.launch
 class VehicleSearchViewModel : ViewModel() {
     val searchCount = MutableStateFlow<String>("")
 
-    private val _error = MutableStateFlow<String?>(null)
-    val error: StateFlow<String?> = _error
-
-    private val _searchResult = MutableStateFlow<List<Vehicle>>(emptyList())
-    val searchResult: StateFlow<List<Vehicle>> = _searchResult
-
     private val _uiState = MutableStateFlow<SearchState>(SearchState.Success(emptyList()))
     val uiState: StateFlow<SearchState> = _uiState
 
@@ -25,15 +18,22 @@ class VehicleSearchViewModel : ViewModel() {
         viewModelScope.launch {
             val input = searchCount.value
             if (searchCount.value.isEmpty()) {
-                _error.emit("Empty input")
+                _uiState.emit(SearchState.Error(ErrorType.EmptyInput))
                 return@launch
             } else {
-                _error.emit(null)
+                _uiState.emit(SearchState.Loading)
             }
 
             val count = input.toInt()
             val service = HttpService.getVehicleService()
             val response = service.getVehicles(count)
+
+            if (response.isSuccessful) {
+                val body = response.body()
+                _uiState.emit(SearchState.Success((body ?: emptyList()).sortedBy { it.vin }))
+            } else {
+                _uiState.emit(SearchState.Error(ErrorType.NetworkError))
+            }
         }
     }
 }
@@ -44,6 +44,12 @@ sealed interface SearchState {
     fun isSuccess(): Boolean = this is Success
 
     object Loading : SearchState
-    data class Error(val error: String) : SearchState
+    data class Error(val error: ErrorType) : SearchState
     data class Success(val result: List<Vehicle>) : SearchState
+}
+
+sealed interface ErrorType {
+    object EmptyInput : ErrorType
+    object InvalidInput : ErrorType
+    object NetworkError : ErrorType
 }

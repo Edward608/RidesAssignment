@@ -54,6 +54,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/search_input"
+                    android:imeOptions="actionSearch"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="numberSigned"
@@ -68,7 +69,6 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:contentDescription="@null"
-                android:onClick="@{() -> viewmodel.getVehicles()}"
                 android:padding="8dp"
                 android:src="@drawable/search_24"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -96,12 +96,23 @@
             android:text="@string/empty_result"
             android:textAlignment="center"
             android:textSize="24sp"
-            android:visibility="@{viewmodel.uiState.success?View.GONE:View.VISIBLE}"
+            android:visibility="@{viewmodel.uiState.error?View.VISIBLE:View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/search_bar"
             tools:visibility="gone" />
+
+        <ProgressBar
+            android:id="@+id/loading_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:progressTint="@color/secondary"
+            android:visibility="@{viewmodel.uiState.loading?View.VISIBLE:View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/search_bar" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

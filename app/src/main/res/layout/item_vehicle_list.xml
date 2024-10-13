@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vehicle"
+            type="com.edwardwongtl.rides.model.Vehicle" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/spacing_medium">
+
+        <TextView
+            android:id="@+id/text_vin"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{@string/label_vin(vehicle.vin)}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Vin : 1234567890" />
+
+        <TextView
+            android:id="@+id/text_make_model"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:text="@{@string/label_make_model(vehicle.makeAndModel)}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_vin"
+            tools:text="Make and Model : Toyota Corolla" />
+
+        <TextView
+            android:id="@+id/text_color"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:text="@{@string/label_color(vehicle.color)}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_make_model"
+            tools:text="Color : Yellow" />
+
+        <TextView
+            android:id="@+id/text_car_type"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:text="@{@string/label_car_type(vehicle.carType)}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_color"
+            tools:text="Car Type : Sedan" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
