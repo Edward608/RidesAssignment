@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Rides</string>
     <string name="search_hint">Vehicle Count</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="empty_result">No result</string>
 </resources>

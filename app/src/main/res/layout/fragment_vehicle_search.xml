@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <variable
             name="viewmodel"
             type="com.edwardwongtl.rides.viewmodel.VehicleSearchViewModel" />
+
+        <import type="android.view.View" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,7 +23,9 @@
             android:layout_height="?android:actionBarSize"
             android:background="@color/primary"
             android:elevation="4dp"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:title="@string/app_name"
+            app:titleTextColor="@color/white" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/search_bar"
@@ -34,24 +39,34 @@
             app:layout_constraintStart_toStartOf="@id/layout_main"
             app:layout_constraintTop_toBottomOf="@id/toolbar">
 
-            <EditText
-                android:id="@+id/search_input"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_input_layout"
                 android:layout_width="0dp"
-                android:layout_height="48dp"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:autofillHints="@string/search_hint"
                 android:hint="@string/search_hint"
-                android:inputType="numberSigned"
-                android:text="@={viewmodel.searchCount}"
+                android:minHeight="48dp"
+                app:errorTextAppearance="@style/ErrorText"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/search_button"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/search_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberSigned"
+                    android:minHeight="48dp"
+                    android:text="@={viewmodel.searchCount}">
+
+                </com.google.android.material.textfield.TextInputEditText>
+            </com.google.android.material.textfield.TextInputLayout>
 
             <ImageButton
                 android:id="@+id/search_button"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:contentDescription="@null"
                 android:onClick="@{() -> viewmodel.getVehicles()}"
                 android:padding="8dp"
@@ -67,10 +82,26 @@
             android:layout_height="0dp"
             android:paddingHorizontal="16dp"
             android:paddingTop="16dp"
+            android:visibility="@{viewmodel.uiState.success?View.VISIBLE:View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/search_bar" />
+            app:layout_constraintTop_toBottomOf="@id/search_bar"
+            tools:listitem="@layout/item_vehicle_list" />
+
+        <TextView
+            android:id="@+id/empty_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/empty_result"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:visibility="@{viewmodel.uiState.success?View.GONE:View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/search_bar"
+            tools:visibility="gone" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -6,8 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.withResumed
 import com.edwardwongtl.rides.databinding.FragmentVehicleSearchBinding
 import com.edwardwongtl.rides.viewmodel.VehicleSearchViewModel
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class VehicleSearchFragment : Fragment() {
     private val viewmodel by viewModels<VehicleSearchViewModel>()
@@ -20,6 +24,15 @@ class VehicleSearchFragment : Fragment() {
         val binding = FragmentVehicleSearchBinding.inflate(layoutInflater, container, false)
         binding.lifecycleOwner = this
         binding.viewmodel = viewmodel
+
+        lifecycleScope.launch {
+            viewmodel.error.collectLatest {
+                withResumed {
+                    binding.textInputLayout.error = it
+                }
+            }
+        }
+
         return binding.root
     }
 }
