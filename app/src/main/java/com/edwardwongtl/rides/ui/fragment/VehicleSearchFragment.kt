@@ -1,7 +1,6 @@
 package com.edwardwongtl.rides.ui.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,15 +11,16 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.withResumed
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.edwardwongtl.rides.R
 import com.edwardwongtl.rides.databinding.FragmentVehicleSearchBinding
 import com.edwardwongtl.rides.ui.VehicleListAdapter
+import com.edwardwongtl.rides.ui.VerticalSpacingItemDecoration
 import com.edwardwongtl.rides.viewmodel.ErrorType
 import com.edwardwongtl.rides.viewmodel.SearchState
 import com.edwardwongtl.rides.viewmodel.VehicleSearchViewModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import com.edwardwongtl.rides.R
 
 class VehicleSearchFragment : Fragment() {
     private lateinit var binding: FragmentVehicleSearchBinding
@@ -38,6 +38,14 @@ class VehicleSearchFragment : Fragment() {
             requireContext(),
             LinearLayoutManager.VERTICAL,
             false
+        )
+
+        binding.vehicleResult.addItemDecoration(
+            VerticalSpacingItemDecoration(
+                resources.getDimensionPixelSize(
+                    R.dimen.spacing_small
+                )
+            )
         )
 
         binding.searchButton.setOnClickListener {
