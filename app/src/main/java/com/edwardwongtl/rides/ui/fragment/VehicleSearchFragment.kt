@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.withResumed
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.edwardwongtl.rides.MainActivity
 import com.edwardwongtl.rides.R
 import com.edwardwongtl.rides.databinding.FragmentVehicleSearchBinding
 import com.edwardwongtl.rides.ui.VehicleListAdapter
@@ -31,25 +32,29 @@ class VehicleSearchFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         binding = FragmentVehicleSearchBinding.inflate(layoutInflater, container, false)
-        binding.lifecycleOwner = this
-        binding.viewmodel = viewmodel
 
-        binding.vehicleResult.layoutManager = LinearLayoutManager(
-            requireContext(), LinearLayoutManager.VERTICAL, false
-        )
+        with(binding) {
+            lifecycleOwner = this@VehicleSearchFragment
+            viewmodel = this@VehicleSearchFragment.viewmodel
+            (requireActivity() as MainActivity).setSupportActionBar(toolbar)
 
-        binding.vehicleResult.addItemDecoration(
-            VerticalSpacingItemDecoration(
-                resources.getDimensionPixelSize(
-                    R.dimen.spacing_small
+            vehicleResult.layoutManager = LinearLayoutManager(
+                requireContext(), LinearLayoutManager.VERTICAL, false
+            )
+
+            vehicleResult.addItemDecoration(
+                VerticalSpacingItemDecoration(
+                    resources.getDimensionPixelSize(
+                        R.dimen.spacing_small
+                    )
                 )
             )
-        )
 
-        binding.searchButton.setOnClickListener {
-            val imm = getSystemService(requireContext(), InputMethodManager::class.java)
-            imm?.hideSoftInputFromWindow(requireView().windowToken, 0)
-            viewmodel.getVehicles()
+            searchButton.setOnClickListener {
+                val imm = getSystemService(requireContext(), InputMethodManager::class.java)
+                imm?.hideSoftInputFromWindow(requireView().windowToken, 0)
+                this@VehicleSearchFragment.viewmodel.getVehicles()
+            }
         }
 
         lifecycleScope.launch {
