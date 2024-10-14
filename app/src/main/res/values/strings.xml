@@ -11,5 +11,7 @@
     <string name="error_empty_input">Empty input</string>
     <string name="error_invalid_input">Invalid input</string>
     <string name="error_network">Network error</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

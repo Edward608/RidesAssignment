@@ -7,7 +7,18 @@
     <fragment
         android:id="@+id/vehicleSearchFragment"
         android:name="com.edwardwongtl.rides.ui.fragment.VehicleSearchFragment"
-        android:label="fragment_vehicle_search2"
-        tools:layout="@layout/fragment_vehicle_search" />
+        tools:layout="@layout/fragment_vehicle_search">
+        <action
+            android:id="@+id/action_show_vehicle_detail"
+            app:destination="@id/vehicleDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/vehicleDetailFragment"
+        android:name="com.edwardwongtl.rides.ui.fragment.VehicleDetailFragment"
+        tools:layout="@layout/fragment_vehicle_detail" >
+        <argument
+            android:name="vehicle"
+            app:argType="com.edwardwongtl.rides.model.Vehicle" />
+    </fragment>
 
 </navigation>

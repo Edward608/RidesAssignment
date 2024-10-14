@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.withResumed
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.edwardwongtl.rides.R
 import com.edwardwongtl.rides.databinding.FragmentVehicleSearchBinding
@@ -27,17 +28,14 @@ class VehicleSearchFragment : Fragment() {
     private val viewmodel by viewModels<VehicleSearchViewModel>()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         binding = FragmentVehicleSearchBinding.inflate(layoutInflater, container, false)
         binding.lifecycleOwner = this
         binding.viewmodel = viewmodel
 
         binding.vehicleResult.layoutManager = LinearLayoutManager(
-            requireContext(),
-            LinearLayoutManager.VERTICAL,
-            false
+            requireContext(), LinearLayoutManager.VERTICAL, false
         )
 
         binding.vehicleResult.addItemDecoration(
@@ -61,7 +59,12 @@ class VehicleSearchFragment : Fragment() {
                         SearchState.Loading -> {}
                         is SearchState.Error -> showError(it.error)
                         is SearchState.Success -> {
-                            val adapter = VehicleListAdapter(it.result, viewLifecycleOwner)
+                            val adapter = VehicleListAdapter(it.result, viewLifecycleOwner) {
+                                findNavController().navigate(
+                                    R.id.vehicleDetailFragment,
+                                    VehicleDetailFragmentArgs(it).toBundle()
+                                )
+                            }
                             binding.vehicleResult.adapter = adapter
                         }
                     }
@@ -75,21 +78,17 @@ class VehicleSearchFragment : Fragment() {
     fun showError(errorType: ErrorType) {
         when (errorType) {
             ErrorType.EmptyInput -> {
-                binding.textInputLayout.error =
-                    getString(R.string.error_empty_input)
+                binding.textInputLayout.error = getString(R.string.error_empty_input)
             }
 
             ErrorType.InvalidInput -> {
-                binding.textInputLayout.error =
-                    getString(R.string.error_invalid_input)
+                binding.textInputLayout.error = getString(R.string.error_invalid_input)
             }
 
             ErrorType.NetworkError -> {
                 binding.textInputLayout.error = null
                 Snackbar.make(
-                    requireView(),
-                    getString(R.string.error_network),
-                    Snackbar.LENGTH_SHORT
+                    requireView(), getString(R.string.error_network), Snackbar.LENGTH_SHORT
                 ).show()
             }
         }

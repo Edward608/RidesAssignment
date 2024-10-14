@@ -9,7 +9,8 @@ import com.edwardwongtl.rides.model.Vehicle
 
 class VehicleListAdapter(
     private val vehicles: List<Vehicle>,
-    private val lifecycleOwner: LifecycleOwner
+    private val lifecycleOwner: LifecycleOwner,
+    private val onItemClicked: (Vehicle) -> Unit
 ) :
     RecyclerView.Adapter<VehicleListAdapter.VehicleViewHolder>() {
 
@@ -27,6 +28,7 @@ class VehicleListAdapter(
         with(holder.viewBinding) {
             vehicle = currentVehicle
             lifecycleOwner = this@VehicleListAdapter.lifecycleOwner
+            root.setOnClickListener { onItemClicked(currentVehicle) }
         }
     }
 
