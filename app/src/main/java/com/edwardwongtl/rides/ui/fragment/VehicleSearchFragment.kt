@@ -61,8 +61,9 @@ class VehicleSearchFragment : Fragment() {
             viewmodel.uiState.collectLatest {
                 withResumed {
                     when (it) {
+                        SearchState.Empty -> {}
                         SearchState.Loading -> {}
-                        is SearchState.Error -> showError(it.error)
+                        is SearchState.Error -> showError(it.errorType)
                         is SearchState.Success -> {
                             val adapter = VehicleListAdapter(it.result, viewLifecycleOwner) {
                                 findNavController().navigate(

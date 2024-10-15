@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 class VehicleSearchViewModel : ViewModel() {
     val searchCount = MutableStateFlow<String>("")
 
-    private val _uiState = MutableStateFlow<SearchState>(SearchState.Success(emptyList()))
+    private val _uiState = MutableStateFlow<SearchState>(SearchState.Empty)
     val uiState: StateFlow<SearchState> = _uiState
 
     fun getVehicles() {
@@ -30,7 +30,11 @@ class VehicleSearchViewModel : ViewModel() {
 
             if (response.isSuccessful) {
                 val body = response.body()
-                _uiState.emit(SearchState.Success((body ?: emptyList()).sortedBy { it.vin }))
+                when {
+                    body == null -> _uiState.emit(SearchState.Error(ErrorType.NetworkError))
+                    body.isEmpty() -> _uiState.emit(SearchState.Empty)
+                    else -> _uiState.emit(SearchState.Success(body.sortedBy { it.vin }))
+                }
             } else {
                 _uiState.emit(SearchState.Error(ErrorType.NetworkError))
             }
@@ -38,14 +42,19 @@ class VehicleSearchViewModel : ViewModel() {
     }
 }
 
-sealed interface SearchState {
+sealed class SearchState(
+    open val errorType: ErrorType? = null,
+    open val result: List<Vehicle> = emptyList(),
+) {
+    fun isEmpty(): Boolean = this is Empty
     fun isLoading(): Boolean = this is Loading
     fun isError(): Boolean = this is Error
     fun isSuccess(): Boolean = this is Success
 
-    object Loading : SearchState
-    data class Error(val error: ErrorType) : SearchState
-    data class Success(val result: List<Vehicle>) : SearchState
+    object Empty : SearchState()
+    object Loading : SearchState()
+    data class Error(override val errorType: ErrorType) : SearchState()
+    data class Success(override val result: List<Vehicle>) : SearchState()
 }
 
 sealed interface ErrorType {

@@ -54,9 +54,9 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/search_input"
-                    android:imeOptions="actionSearch"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:imeOptions="actionSearch"
                     android:inputType="numberSigned"
                     android:minHeight="48dp"
                     android:text="@={viewmodel.searchCount}">
@@ -82,7 +82,7 @@
             android:layout_height="0dp"
             android:paddingHorizontal="16dp"
             android:paddingTop="16dp"
-            android:visibility="@{viewmodel.uiState.success?View.VISIBLE:View.GONE}"
+            android:visibility="@{viewmodel.uiState.result.empty?View.GONE:View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -96,7 +96,7 @@
             android:text="@string/empty_result"
             android:textAlignment="center"
             android:textSize="24sp"
-            android:visibility="@{viewmodel.uiState.error?View.VISIBLE:View.GONE}"
+            android:visibility="@{viewmodel.uiState.empty || viewmodel.uiState.error?View.VISIBLE:View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
