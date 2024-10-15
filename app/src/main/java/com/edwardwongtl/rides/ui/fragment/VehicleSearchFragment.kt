@@ -70,7 +70,7 @@ class VehicleSearchFragment : Fragment(), MenuProvider {
                     when (it) {
                         SearchState.Empty -> {}
                         SearchState.Loading -> {}
-                        is SearchState.Error -> showError(it.errorType)
+                        is SearchState.Error -> {}
                         is SearchState.Success -> {
                             val adapter = VehicleListAdapter(it.result, viewLifecycleOwner) {
                                 findNavController().navigate(
@@ -96,25 +96,6 @@ class VehicleSearchFragment : Fragment(), MenuProvider {
         requireActivity().addMenuProvider(this, viewLifecycleOwner)
 
         return binding.root
-    }
-
-    fun showError(errorType: ErrorType) {
-        when (errorType) {
-            ErrorType.EmptyInput -> {
-                binding.textInputLayout.error = getString(R.string.error_empty_input)
-            }
-
-            ErrorType.InvalidInput -> {
-                binding.textInputLayout.error = getString(R.string.error_invalid_input)
-            }
-
-            ErrorType.NetworkError -> {
-                binding.textInputLayout.error = null
-                Snackbar.make(
-                    requireView(), getString(R.string.error_network), Snackbar.LENGTH_SHORT
-                ).show()
-            }
-        }
     }
 
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
