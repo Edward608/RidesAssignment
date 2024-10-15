@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.Rides" parent="Theme.AppCompat.Light.NoActionBar"/>
+    <style name="Theme.Rides" parent="Theme.MaterialComponents.Light.NoActionBar"/>
+
+    <style name="Toolbar" parent="ThemeOverlay.MaterialComponents.ActionBar">
+        <item name="colorControlNormal">@color/white</item>
+        <item name="android:textColorPrimary">@color/white</item>
+    </style>
 
     <style name="ErrorText" parent="TextAppearance.Design.Error">
         <item name="android:textSize">16sp</item>

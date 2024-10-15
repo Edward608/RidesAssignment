@@ -4,4 +4,8 @@
     <dimen name="spacing_medium">16dp</dimen>
     <dimen name="spacing_large">24dp</dimen>
 
+    <dimen name="radius_small">8dp</dimen>
+    <dimen name="elevation_default">4dp</dimen>
+
+    <dimen name="text_input_min_height">48dp</dimen>
 </resources>
