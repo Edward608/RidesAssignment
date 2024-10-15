@@ -14,6 +14,8 @@ class VehicleSearchViewModel : ViewModel() {
     private val _uiState = MutableStateFlow<SearchState>(SearchState.Empty)
     val uiState: StateFlow<SearchState> = _uiState
 
+    val sortOption = MutableStateFlow<SortOption>(SortOption.VIN)
+
     fun getVehicles() {
         viewModelScope.launch {
             val input = searchCount.value
@@ -33,11 +35,27 @@ class VehicleSearchViewModel : ViewModel() {
                 when {
                     body == null -> _uiState.emit(SearchState.Error(ErrorType.NetworkError))
                     body.isEmpty() -> _uiState.emit(SearchState.Empty)
-                    else -> _uiState.emit(SearchState.Success(body.sortedBy { it.vin }))
+                    else -> {
+                        when (sortOption.value) {
+                            SortOption.VIN -> _uiState.emit(SearchState.Success(body.sortedBy { it.vin }))
+                            SortOption.CAR_TYPE -> _uiState.emit(SearchState.Success(body.sortedBy { it.carType }))
+                        }
+                    }
                 }
             } else {
                 _uiState.emit(SearchState.Error(ErrorType.NetworkError))
             }
+        }
+    }
+
+    fun updateSort(sortOption: SortOption) {
+        val data = _uiState.value.result
+        viewModelScope.launch {
+            when (sortOption) {
+                SortOption.VIN -> _uiState.emit(SearchState.Success(data.sortedBy { it.vin }))
+                SortOption.CAR_TYPE -> _uiState.emit(SearchState.Success(data.sortedBy { it.carType }))
+            }
+            this@VehicleSearchViewModel.sortOption.emit(sortOption)
         }
     }
 }
@@ -61,4 +79,9 @@ sealed interface ErrorType {
     object EmptyInput : ErrorType
     object InvalidInput : ErrorType
     object NetworkError : ErrorType
+}
+
+enum class SortOption {
+    VIN,
+    CAR_TYPE
 }

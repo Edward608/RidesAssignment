@@ -8,7 +8,6 @@
         <item name="android:textColorPrimary">@color/white</item>
         <item name="android:elevation">@dimen/elevation_default</item>
         <item name="android:background">@color/primary</item>
-
     </style>
 
     <style name="ErrorText" parent="TextAppearance.Design.Error">

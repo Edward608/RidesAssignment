@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">Rides</string>
+    <string name="action_sort">Sort</string>
+    <string name="sort_menu_title">Sort by:</string>
+    <string name="sort_vin">VIN</string>
+    <string name="sort_car_type">Car Type</string>
 
     <string name="search_hint">Vehicle Count</string>
     <string name="empty_result">No result</string>
