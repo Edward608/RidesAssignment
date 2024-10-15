@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.withResumed
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navOptions
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.edwardwongtl.rides.MainActivity
 import com.edwardwongtl.rides.R
@@ -36,13 +37,12 @@ class VehicleSearchFragment : Fragment() {
         with(binding) {
             lifecycleOwner = this@VehicleSearchFragment
             viewmodel = this@VehicleSearchFragment.viewmodel
-            (requireActivity() as MainActivity).setSupportActionBar(toolbar)
 
-            vehicleResult.layoutManager = LinearLayoutManager(
+            vehicleList.layoutManager = LinearLayoutManager(
                 requireContext(), LinearLayoutManager.VERTICAL, false
             )
 
-            vehicleResult.addItemDecoration(
+            vehicleList.addItemDecoration(
                 VerticalSpacingItemDecoration(
                     resources.getDimensionPixelSize(
                         R.dimen.spacing_small
@@ -51,8 +51,10 @@ class VehicleSearchFragment : Fragment() {
             )
 
             searchButton.setOnClickListener {
+                // Hide keyboard
                 val imm = getSystemService(requireContext(), InputMethodManager::class.java)
                 imm?.hideSoftInputFromWindow(requireView().windowToken, 0)
+
                 this@VehicleSearchFragment.viewmodel.getVehicles()
             }
         }
@@ -68,10 +70,18 @@ class VehicleSearchFragment : Fragment() {
                             val adapter = VehicleListAdapter(it.result, viewLifecycleOwner) {
                                 findNavController().navigate(
                                     R.id.vehicleDetailFragment,
-                                    VehicleDetailFragmentArgs(it).toBundle()
+                                    VehicleDetailFragmentArgs(it).toBundle(),
+                                    navOptions {
+                                        anim {
+                                            enter = R.anim.slide_in
+                                            exit = R.anim.slide_out
+                                            popEnter = R.anim.slide_in
+                                            popExit = R.anim.slide_out
+                                        }
+                                    }
                                 )
                             }
-                            binding.vehicleResult.adapter = adapter
+                            binding.vehicleList.adapter = adapter
                         }
                     }
                 }

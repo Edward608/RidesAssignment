@@ -24,13 +24,13 @@ class VehicleDetailFragment : Fragment() {
         with(binding) {
             lifecycleOwner = this@VehicleDetailFragment
             vehicle = args.vehicle
-            (requireActivity() as MainActivity).apply {
-                setSupportActionBar(toolbar)
-                supportActionBar?.setDisplayHomeAsUpEnabled(true)
-                val navController = findNavController()
-                val appConfiguration = AppBarConfiguration(navController.graph)
-                toolbar.setupWithNavController(navController, appConfiguration)
-            }
+//            (requireActivity() as MainActivity).apply {
+//                setSupportActionBar(toolbar)
+//                supportActionBar?.setDisplayHomeAsUpEnabled(true)
+//                val navController = findNavController()
+//                val appConfiguration = AppBarConfiguration(navController.graph)
+//                toolbar.setupWithNavController(navController, appConfiguration)
+//            }
         }
 
         return binding.root

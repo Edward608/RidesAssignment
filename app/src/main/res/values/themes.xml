@@ -6,8 +6,8 @@
     <style name="Toolbar" parent="ThemeOverlay.MaterialComponents.ActionBar">
         <item name="colorControlNormal">@color/white</item>
         <item name="android:textColorPrimary">@color/white</item>
-        <item name="elevation">@dimen/elevation_default</item>
-        <item name="background">@color/primary</item>
+        <item name="android:elevation">@dimen/elevation_default</item>
+        <item name="android:background">@color/primary</item>
 
     </style>
 

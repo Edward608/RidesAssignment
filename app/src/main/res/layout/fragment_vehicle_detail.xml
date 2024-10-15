@@ -15,16 +15,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?android:actionBarSize"
-            app:layout_constraintTop_toTopOf="parent"
-            app:theme="@style/Toolbar"
-            app:title="@string/title_vehicle_detail"
-            tools:background="@color/primary"
-            tools:titleTextColor="@color/white" />
-
         <com.google.android.material.card.MaterialCardView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -34,7 +24,7 @@
             app:cardElevation="@dimen/elevation_default"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar">
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
