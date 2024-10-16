@@ -32,26 +32,26 @@
                 android:padding="@dimen/spacing_medium">
 
                 <TextView
-                    android:id="@+id/vinTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{@string/label_vin(vehicle.vin)}"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="VIN : 1234567890" />
-
-                <TextView
                     android:id="@+id/makeAndModelTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
                     android:text="@{@string/label_make_model(vehicle.makeAndModel)}"
                     android:textSize="18sp"
+                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/vinTextView"
+                    app:layout_constraintTop_toTopOf="parent"
                     tools:text="Make and Model: Toyota Camry" />
+
+                <TextView
+                    android:id="@+id/vinTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@{@string/label_vin(vehicle.vin)}"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/makeAndModelTextView"
+                    tools:text="VIN : 1234567890" />
 
                 <TextView
                     android:id="@+id/colorTextView"
@@ -61,7 +61,7 @@
                     android:text="@{@string/label_color(vehicle.color)}"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/makeAndModelTextView"
+                    app:layout_constraintTop_toBottomOf="@id/vinTextView"
                     tools:text="Color: Red" />
 
                 <TextView
