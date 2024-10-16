@@ -22,11 +22,9 @@ import com.edwardwongtl.rides.R
 import com.edwardwongtl.rides.databinding.FragmentVehicleSearchBinding
 import com.edwardwongtl.rides.ui.VehicleListAdapter
 import com.edwardwongtl.rides.ui.VerticalSpacingItemDecoration
-import com.edwardwongtl.rides.viewmodel.ErrorType
 import com.edwardwongtl.rides.viewmodel.SearchState
 import com.edwardwongtl.rides.viewmodel.SortOption
 import com.edwardwongtl.rides.viewmodel.VehicleSearchViewModel
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
