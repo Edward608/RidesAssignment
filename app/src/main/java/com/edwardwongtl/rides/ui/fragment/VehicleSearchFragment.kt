@@ -107,7 +107,8 @@ class VehicleSearchFragment : Fragment(), MenuProvider {
                 binding.textInputLayout.error = getString(R.string.error_invalid_input)
             }
 
-            // Network errors are not shown to the user
+            // Network errors are not shown to the user for base_requirements
+            // Add error handling for network errors for UX improvement
             else -> {}
         }
     }
