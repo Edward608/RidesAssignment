@@ -22,6 +22,7 @@ import com.edwardwongtl.rides.R
 import com.edwardwongtl.rides.databinding.FragmentVehicleSearchBinding
 import com.edwardwongtl.rides.ui.VehicleListAdapter
 import com.edwardwongtl.rides.ui.VerticalSpacingItemDecoration
+import com.edwardwongtl.rides.viewmodel.ErrorType
 import com.edwardwongtl.rides.viewmodel.SearchState
 import com.edwardwongtl.rides.viewmodel.SortOption
 import com.edwardwongtl.rides.viewmodel.VehicleSearchViewModel
@@ -67,8 +68,8 @@ class VehicleSearchFragment : Fragment(), MenuProvider {
                 withResumed {
                     when (it) {
                         SearchState.Empty -> {}
-                        SearchState.Loading -> {}
-                        is SearchState.Error -> {}
+                        SearchState.Loading -> hideError()
+                        is SearchState.Error -> showError(it.errorType)
                         is SearchState.Success -> {
                             val adapter = VehicleListAdapter(it.result, viewLifecycleOwner) {
                                 findNavController().navigate(
@@ -94,6 +95,25 @@ class VehicleSearchFragment : Fragment(), MenuProvider {
         requireActivity().addMenuProvider(this, viewLifecycleOwner)
 
         return binding.root
+    }
+
+    fun showError(errorType: ErrorType) {
+        when (errorType) {
+            ErrorType.EmptyInput -> {
+                binding.textInputLayout.error = getString(R.string.error_empty_input)
+            }
+
+            ErrorType.InvalidInput -> {
+                binding.textInputLayout.error = getString(R.string.error_invalid_input)
+            }
+
+            // Network errors are not shown to the user
+            else -> {}
+        }
+    }
+
+    fun hideError() {
+        binding.textInputLayout.error = null
     }
 
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
